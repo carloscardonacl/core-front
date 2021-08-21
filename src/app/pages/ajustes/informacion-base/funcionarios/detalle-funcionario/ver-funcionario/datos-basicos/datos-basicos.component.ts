@@ -7,6 +7,7 @@ import { functionsUtils } from 'src/app/core/utils/functionsUtils';
 import { Subscription } from 'rxjs';
 import { PersonDataService } from '../../../create/personData.service';
 import { Person } from 'src/app/core/models/person.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-datos-basicos',
@@ -41,7 +42,7 @@ export class DatosBasicosComponent implements OnInit {
   constructor( private fb:FormBuilder, 
                 private basicDataService: DatosBasicosService,
                 private activatedRoute: ActivatedRoute,
-                private _person: PersonDataService ) { }
+                private _person: PersonDataService) { }
   person: Person
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params.id;
@@ -63,15 +64,11 @@ export class DatosBasicosComponent implements OnInit {
       for (const bd of this.data) {
         this.funcionario = bd;
         console.log(this.funcionario);
-        
       }
     })
   }
 
   createForm(){
-    /* this.form.patchValue({
-      email: this.funcionario
-    }) */
     this.form = this.fb.group({
       image: ['', Validators.required],
       first_name: ['', Validators.required],
@@ -191,6 +188,20 @@ export class DatosBasicosComponent implements OnInit {
     this.person = { ...this.person,...this.form.value };
     this.person.image = this.file;
     this._person.person.next(this.person);
+  }
+
+  guardar() {
+    this.basicDataService.updateBasicData(this.funcionario, this.id)
+    .subscribe( res => {
+      console.log(res);
+      this.modal.hide();
+      this.getBasicsData();
+      Swal.fire({
+        icon: 'success',
+        title: 'Editado con éxito',
+        text: 'Se han actualizado los cambios correctamente'
+      })
+    });
   }
 
 }

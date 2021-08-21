@@ -90,12 +90,12 @@
     <div class="app-modal-body">
         <div class="row mt-3">
             <div class="col-12">
-                <form [formGroup]="form" (ngSubmit)="save()">
+                <form [formGroup]="form">
                     <div class="form-row mt-3">
                         <div class="form-group col-md-2 text-center">
                             <img [src]="fileString" class="img-rounded d-block m-auto" alt="">
                             <label for="image" class="subir-archivo mt-3">Cargar imagen</label>
-                            <input type="file" name="image" class="form-control-file" id="image" formControlName="image" (change)="onFileChanged($event)" [class.is-invalid]="image_valid" placeholder="Imagen" />
+                            <input type="file" name="image" class="form-control-file" id="image" [(ngModel)]="funcionario.image" formControlName="image" (change)="onFileChanged($event)" [class.is-invalid]="image_valid" placeholder="Imagen" />
 
                             <div class="text-center text-danger" *ngIf="image_valid">
                                 <small class="invalid">La imagen es necesaria</small>
@@ -220,7 +220,7 @@
     <div class="app-modal-footer">
         <div class="form-group text-right">
             <button (click)="modal.hide()" type="button" class="btn btn-danger raised mr-2 btn-sm">Cerrar</button>
-            <button type="submit" class="btn btn-primary btn-sm raised">Actualizar</button>
+            <button type="submit" class="btn btn-primary btn-sm raised" (click)="guardar()">Actualizar</button>
         </div>
     </div>
 </app-modal-basic>

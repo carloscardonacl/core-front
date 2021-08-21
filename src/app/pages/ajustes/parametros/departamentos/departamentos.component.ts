@@ -12,6 +12,7 @@ export class DepartamentosComponent implements OnInit {
   @ViewChild('modalM') modalM:any;
   @ViewChild('modalD') modalD:any;
 
+  loading = false;
   municipios:any = [];
   munic:any = [];
   municipality:any = {};
@@ -47,9 +48,12 @@ export class DepartamentosComponent implements OnInit {
   }
   filtroMunicipio:any = {
     code: '',
-    name: '',
+    municipality: '',
     department: ''
   }
+/*   filtroDepartment:any = {
+    department: ''
+  } */
   constructor( private depService:DepartamentosService ) { }
 
   ngOnInit(): void {
@@ -105,7 +109,7 @@ export class DepartamentosComponent implements OnInit {
             allowOutsideClick: false,
             allowEscapeKey: false
           })
-          
+          this.formM.reset();
         } else {
           
           Swal.fire({
@@ -163,37 +167,38 @@ export class DepartamentosComponent implements OnInit {
         })
         this.getAllDepartment();
         this.modalD.hide();
+        this.formD.reset();
       });
     } 
   }
 
   get name_department(){
     return (
-      this.formD.get('name') && this.formD.get('name').touched
+      this.formD.get('name').invalid && this.formD.get('name').touched
     )
   }
 
   get name_municipality(){
     return (
-      this.formM.get('name') && this.formM.get('name').touched
+      this.formM.get('name').invalid && this.formM.get('name').touched
     )
   }
 
   get code_municipality(){
     return (
-      this.formM.get('code') && this.formM.get('code').touched
+      this.formM.get('code').invalid && this.formM.get('code').touched
     )
   }
 
   get department_municipality(){
     return (
-      this.formM.get('department_id') && this.formM.get('department_id').touched
+      this.formM.get('department_id').invalid && this.formM.get('department_id').touched
     )
   }
 
   get code_dane_municipality(){
     return (
-      this.formM.get('code_dane') && this.formM.get('code_dane').touched
+      this.formM.get('code_dane').invalid && this.formM.get('code_dane').touched
     )
   }
 

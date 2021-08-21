@@ -23,6 +23,7 @@ export class ZonasComponent implements OnInit {
     collectionSize: 0
   }
   status:any = 'Inactivo';
+  loading = false;
   constructor( private zonesService:ZonasService ) { }
 
   ngOnInit(): void {    
@@ -94,15 +95,15 @@ export class ZonasComponent implements OnInit {
           allowOutsideClick: false,
           allowEscapeKey: false,
         })
-      } )
-
+      })
+      this.form.reset();
     }
 
   }
 
   get name_valid(){
     return (
-      this.form.get('name') && this.form.get('name').touched
+      this.form.get('name').invalid && this.form.get('name').touched
     )
   }
 
